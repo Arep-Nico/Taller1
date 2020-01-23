@@ -224,12 +224,18 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
 
     @Override
     public boolean contains(Object o) {
+        if (indexOf(o) != -1)
+            return true;
         return false;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        boolean res = true;
+        for (Object object : c) {
+            res &= contains(object);
+        }
+        return res;
     }
 
     @Override
@@ -244,7 +250,7 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
     
     @Override
     public boolean hasNext() {
-        if (now != null && now.getNext() != null)
+        if (now != null)
             return true;
         return false;
     }
@@ -270,7 +276,11 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean res = false;
+        for (Object object : c) {
+            res &= remove(object);
+        }
+        return res;
     }
 
     @Override

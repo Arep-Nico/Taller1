@@ -10,8 +10,8 @@ public class App
     {
         System.out.println( "Hello World!" );
         LinkedList<Double> a = new LinkedList<Double>();
-        a.add(1.0);
-        a.add(3.0);
+        a.add(1.2);
+        a.add(3.5);
         MeanAndStandard.mean(a);
     }
 }
