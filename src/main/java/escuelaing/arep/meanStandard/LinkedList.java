@@ -1,5 +1,6 @@
 package escuelaing.arep.meanStandard;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -9,16 +10,22 @@ import java.util.ListIterator;
 * @author Nicolas Cardenas
 * @version: 22/01/2019
 */
-class LinkedList<T> implements List<T> {
+class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>, Iterator<T> {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Head head;
     private int size;
+    private Node now;
 
     /* 
     * Constructor de una LinkedList
     */
     LinkedList() {
         this.head = new Head(null, null);
+        this.now = head.getFirst();
         this.size = 0;
     }
 
@@ -34,6 +41,7 @@ class LinkedList<T> implements List<T> {
         if (size == 0) {
             head.setFirst(node);
             head.setLast(node);
+            now = head.getFirst();
             size += 1;
             return true;
         } else if (size > 0) {
@@ -63,6 +71,7 @@ class LinkedList<T> implements List<T> {
         } else if (index == 0) {
             node.setNext(temp);
             head.setFirst(node);
+            now = head.getFirst();
         } else {
             for (int i = 0; i < size; i++) {
                 Node temp2 = temp.getNext();
@@ -116,6 +125,13 @@ class LinkedList<T> implements List<T> {
         return res.getData();
     }
 
+    /*
+     * Obtener el indice de un objeto
+     * 
+     * @param objeto para buscar en la lista
+     * 
+     * @return index posicion del elemento
+     */
     @Override
     public int indexOf(Object o) {
         int res = -1;
@@ -168,12 +184,21 @@ class LinkedList<T> implements List<T> {
         }
         Node res = temp.getNext();
         temp.setNext(res.getNext());
+        size -=1 ;
         return res.getData();
     }
 
     @Override
     public T set(int index, T element) {
-        return null;
+        Node temp = head.getFirst();
+        int i = 0;
+        while (i != index ) {
+            temp = temp.getNext();
+            i++;
+        }
+        T res = temp.getData();
+        temp.setData(element);
+        return res;
     }
 
     @Override
@@ -194,6 +219,7 @@ class LinkedList<T> implements List<T> {
     public void clear() {
         head.setFirst(null);
         head.setLast(null);
+        size = 0;
     }
 
     @Override
@@ -213,7 +239,21 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return this;
+    }
+    
+    @Override
+    public boolean hasNext() {
+        if (now != null && now.getNext() != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public T next() {
+        T data = now.getData();
+        now = now.getNext();
+        return data;
     }
 
     @Override
@@ -223,7 +263,8 @@ class LinkedList<T> implements List<T> {
         if (i != -1) {
             res = true;
             remove(i);
-        }
+            size -= 1;
+        }        
         return res;
     }
 
@@ -244,7 +285,11 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        return null;
+        Object[] res = new Object[size];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = get(i);
+        }
+        return res;
     }
 
     @Override
