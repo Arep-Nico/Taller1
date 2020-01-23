@@ -10,7 +10,7 @@ import java.util.ListIterator;
 * @author Nicolas Cardenas
 * @version: 22/01/2019
 */
-class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>, Iterator<T> {
+class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Collection<T> {
 
     /**
      *
@@ -18,14 +18,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
     private static final long serialVersionUID = 1L;
     private Head head;
     private int size;
-    private Node now;
 
     /* 
     * Constructor de una LinkedList
     */
     LinkedList() {
         this.head = new Head(null, null);
-        this.now = head.getFirst();
         this.size = 0;
     }
 
@@ -41,7 +39,6 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
         if (size == 0) {
             head.setFirst(node);
             head.setLast(node);
-            now = head.getFirst();
             size += 1;
             return true;
         } else if (size > 0) {
@@ -71,7 +68,6 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
         } else if (index == 0) {
             node.setNext(temp);
             head.setFirst(node);
-            now = head.getFirst();
         } else {
             for (int i = 0; i < size; i++) {
                 Node temp2 = temp.getNext();
@@ -245,21 +241,24 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Collection<T>
 
     @Override
     public Iterator<T> iterator() {
-        return this;
-    }
-    
-    @Override
-    public boolean hasNext() {
-        if (now != null)
-            return true;
-        return false;
-    }
+        Iterator<T> res = new Iterator<T>() {
+            private Node now = head.getFirst();
 
-    @Override
-    public T next() {
-        T data = now.getData();
-        now = now.getNext();
-        return data;
+            @Override
+            public boolean hasNext() {
+                if (now != null)
+                    return true;
+                return false;
+            }
+
+            @Override
+            public T next() {
+                T data = now.getData();
+                now = now.getNext();
+                return data;
+            }
+        };
+        return res;
     }
 
     @Override

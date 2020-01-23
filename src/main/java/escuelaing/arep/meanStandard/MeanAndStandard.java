@@ -19,8 +19,10 @@ public class MeanAndStandard {
 
     public static double standard(LinkedList<Double> list) {
         double mean =  MeanAndStandard.mean(list);
+
         double sum = 0.0;
         for (Double double1 : list) {
+            System.out.println(double1);
             sum += Math.pow((double1 - mean), 2);
         }
         double div = sum / (list.size() - 1);
