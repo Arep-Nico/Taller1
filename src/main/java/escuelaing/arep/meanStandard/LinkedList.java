@@ -6,20 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/* 
+/**
 * @author Nicolas Cardenas
 * @version: 22/01/2019
 */
 class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Collection<T> {
 
     /**
-     *
+     * Serial Version UID
      */
     private static final long serialVersionUID = 1L;
     private Head head;
     private int size;
 
-    /* 
+    /**
     * Constructor de una LinkedList
     */
     LinkedList() {
@@ -27,7 +27,7 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         this.size = 0;
     }
 
-    /*
+    /**
      * Agregar un elemento a la lista
      * @param T dat
      * @return boolean
@@ -51,7 +51,7 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return false;
     }
 
-    /*
+    /**
      * Agregar un elemento a la lista
      * 
      * @param T dat elemento a agregar
@@ -81,7 +81,7 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         size += 1;
     }
 
-    /*
+    /**
      * Agregar todos los elementos de la coleccion
      * 
      * @param C coleccion de elementos
@@ -90,6 +90,7 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
      * 
      * @return boolean
      */
+
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
 
@@ -103,12 +104,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return false;
     }
 
-    /*
+    /**
      * Obtener el elemento de la posicion
      * 
      * @param index posicion del elemento
      * 
-     * @return T element
+     * @return T element 
      */
     @Override
     public T get(int index) {
@@ -121,12 +122,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res.getData();
     }
 
-    /*
+    /**
      * Obtener el indice de un objeto
      * 
      * @param objeto para buscar en la lista
      * 
-     * @return index posicion del elemento
+     * @return index posicion del elemento 
      */
     @Override
     public int indexOf(Object o) {
@@ -143,6 +144,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res;
     }
 
+
+    /**
+     * Retorna la ultima posicion del objeto en la lista 
+     * @param object elemento a buscar
+     * @return last el ultimo elemento de la lista 
+     */
     @Override
     public int lastIndexOf(Object o) {
         int res = -1;
@@ -168,6 +175,11 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return null;
     }
 
+    /**
+     * Remueve el elemento de la posicion dada
+     * @param index posicion del elemento
+     * @return elemeto a eliminar
+     */
     @Override
     public T remove(int index) {
         if (0 < index && index < size)
@@ -184,6 +196,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res.getData();
     }
 
+    /**
+     * Cambiar el valor de una posicion de la lista
+     * @param index posicion de cambio
+     * @param element elemento a cambiar
+     * @return elemento de la posicion antes del cambio
+     */
     @Override
     public T set(int index, T element) {
         Node temp = head.getFirst();
@@ -202,6 +220,11 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return null;
     }
 
+    /**
+     * Agrega una coleccion de elementos a la lista
+     * @param coleccion de elementos para agregar
+     * @return retorna si fue posible agregar los elementos
+     */
     @Override
     public boolean addAll(Collection<? extends T> c) {
         boolean res = true;
@@ -211,6 +234,9 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res;
     }
 
+    /**
+     * Limpia la lista 
+     */
     @Override
     public void clear() {
         head.setFirst(null);
@@ -218,6 +244,11 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         size = 0;
     }
 
+    /**
+     * Retorna true si el elemeto esta en la lista
+     * @param o elemento a encontrar
+     * @return retorna true si se encuentra el elemento en la lista, de lo contrario retorna false
+     */
     @Override
     public boolean contains(Object o) {
         if (indexOf(o) != -1)
@@ -225,6 +256,13 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return false;
     }
 
+    /**
+     * Retorna true si los elemetos estan en la lista
+     * 
+     * @param c elementos a encontrar
+     * @return retorna true si se encuentran los elementos en la lista, de lo contrario
+     *         retorna false
+     */
     @Override
     public boolean containsAll(Collection<?> c) {
         boolean res = true;
@@ -234,11 +272,19 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res;
     }
 
+    /**
+     * Retorna true si esta la lista vacia
+     * @return retorna si la lista esta vacia o no.
+     */
     @Override
     public boolean isEmpty() {
         return head.getFirst().equals(null);
     }
 
+    /**
+     * Retorna un iterador
+     * @return Retorna un iterator 
+     */
     @Override
     public Iterator<T> iterator() {
         Iterator<T> res = new Iterator<T>() {
@@ -261,6 +307,11 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res;
     }
 
+    /**
+     * Elimina un elemento de la lista
+     * @param o elemento a eliminar
+     * @return retorna si fue posible eliminar el elemento
+     */
     @Override
     public boolean remove(Object o) {
         boolean res = false;
@@ -273,6 +324,12 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return res;
     }
 
+    /**
+     * Eliminar todos los elementos de una coleccion
+     * 
+     * @param c coleccion de elementos
+     * @return retorna si fue posible eliminar los elementos
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean res = false;
@@ -287,11 +344,19 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         return false;
     }
 
+    /**
+     * Retorna el tamaño de la lista
+     * @return retorna el tamaño de la lista
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Convierte la lista a un Array
+     * @return retorna un Array
+     */
     @Override
     public Object[] toArray() {
         Object[] res = new Object[size];
@@ -319,21 +384,35 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
             this.next = next;
         }
 
-        /* 
-        *
-        */
+        /**
+         * Retorna el valor de elemento
+         * 
+         * @return retorna el elemento
+         */
         public T getData() {
             return data;
         }
 
+        /**
+         * Cambia el valor del elemento
+         * @param data elemento para cambiar el anterios
+         */
         public void setData(T data) {
             this.data = data;
         }
 
+        /**
+         * Obtener un Nodo
+         * @return retorna el nodo vecino
+         */
         public Node getNext() {
             return next;
         }
 
+        /**
+         * Cambia la referencia del vecino
+         * @param next nodo para cambiar la referencia
+         */
         public void setNext(Node next) {
             this.next = next;
         }
@@ -346,23 +425,44 @@ class LinkedList<T> implements List<T>, Iterable<T>, Serializable, Cloneable, Co
         private Node first;
         private Node last;
 
+        /**
+         * Constructor del Head
+         * @param fisrt el primer nodo
+         * @param last el ultimo nodo
+         */
         Head(Node fisrt, Node last) {
             this.first = fisrt;
             this.last = last;
         }
 
+        /**
+         * Retorna la referencia del primer nodo
+         * @return retorna un nodo
+         */
         public Node getFirst() {
             return first;
         }
 
+        /**
+         * Cambia la referencia del primer nodo
+         * @param first
+         */
         public void setFirst(Node first) {
             this.first = first;
         }
 
+        /**
+         * Obtiene la referencia del ultimo nodo
+         * @return retorna un nodo
+         */
         public Node getLast() {
             return last;
         }
 
+        /**
+         * Cambia la referencia del ultimo nodo
+         * @param last un nodo
+         */
         public void setLast(Node last) {
             this.last = last;
         }
