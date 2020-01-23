@@ -5,16 +5,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/* 
+* @author Nicolas Cardenas
+* @version: 22/01/2019
+*/
 class LinkedList<T> implements List<T> {
 
     private Head head;
     private int size;
 
+    /* 
+    * Constructor de una LinkedList
+    */
     LinkedList() {
         this.head = new Head(null, null);
         this.size = 0;
     }
 
+    /*
+     * Agregar un elemento a la lista
+     * @param T dat
+     * @return boolean
+     */
     @Override
     public boolean add(T data) {
         Node node = new Node(data, null);
@@ -34,6 +46,13 @@ class LinkedList<T> implements List<T> {
         return false;
     }
 
+    /*
+     * Agregar un elemento a la lista
+     * 
+     * @param T dat elemento a agregar
+     * @param index posicion donde de insertaran el elemento
+     * 
+     */
     @Override
     public void add(int index, T element) {
         Node node = new Node(element, null);
@@ -57,6 +76,15 @@ class LinkedList<T> implements List<T> {
         size += 1;
     }
 
+    /*
+     * Agregar todos los elementos de la coleccion
+     * 
+     * @param C coleccion de elementos
+     * 
+     * @param index posicion donde de insertaran los elementos
+     * 
+     * @return boolean
+     */
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
 
@@ -66,41 +94,56 @@ class LinkedList<T> implements List<T> {
             this.add(temp, e);
             temp += 1;
         }
-
-        /*Iterator elements = c.iterator();
-        
-        if (index < 0 || index > this.size) {
-            throw new Error("out of range");
-        } else if (index == 0) {
-            Node tempFirst = head.getFirst();
-            Node newFirst = new Node( (T) elements.next(), null);
-            Node tempLast = newFirst;
-
-            head.setFirst(newFirst);
-
-            while (elements.hasNext()) {
-                Node node = new Node( (T) elements.next(), null);
-                tempLast.setNext(node);
-                tempLast = node;
-            }
-            return true;
-        }*/
+        size += temp;
         return false;
     }
 
+    /*
+     * Obtener el elemento de la posicion
+     * 
+     * @param index posicion del elemento
+     * 
+     * @return T element
+     */
     @Override
     public T get(int index) {
-        return null;
+        int i = 0;
+        Node res = head.getFirst();
+        while (i != index ) {
+            res = res.getNext();
+            i ++;
+        }
+        return res.getData();
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        int res = -1;
+        int i = 0;
+        Node temp = head.getFirst();
+        while (i < size + 1) {
+            if (temp.getData().equals(o)) {
+                temp = temp.getNext();
+                return i;
+            }
+            i++;
+        }
+        return res;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        int res = -1;
+        int i = 0;
+        Node temp = head.getFirst();
+        while (i < size + 1) {
+            if (temp.getData().equals(o)) {
+                temp = temp.getNext();
+                res = i;
+            }
+            i++;
+        }
+        return res;
     }
 
     @Override
@@ -115,7 +158,17 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        return null;
+        if (0 < index && index < size)
+            throw new Error("Out of range");
+        int i = 0;
+        Node temp = head.getFirst();
+        while (i != index -1) {
+            temp = temp.getNext();
+            i++;
+        }
+        Node res = temp.getNext();
+        temp.setNext(res.getNext());
+        return res.getData();
     }
 
     @Override
@@ -130,12 +183,17 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        boolean res = true;
+        for (T e : c) {
+            res &= add(e);
+        }
+        return res;
     }
 
     @Override
     public void clear() {
-
+        head.setFirst(null);
+        head.setLast(null);
     }
 
     @Override
@@ -150,7 +208,7 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return head.getFirst().equals(null);
     }
 
     @Override
@@ -160,7 +218,13 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        boolean res = false;
+        int i = indexOf(o);
+        if (i != -1) {
+            res = true;
+            remove(i);
+        }
+        return res;
     }
 
     @Override
@@ -175,7 +239,7 @@ class LinkedList<T> implements List<T> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -189,7 +253,7 @@ class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Node
+     * Node class
      */
     private class Node {
 
@@ -201,6 +265,9 @@ class LinkedList<T> implements List<T> {
             this.next = next;
         }
 
+        /* 
+        *
+        */
         public T getData() {
             return data;
         }
