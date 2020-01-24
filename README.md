@@ -8,7 +8,7 @@ Se requiere maven y la maquina virtual de Java.
 
 ## Diseño
 
-La documentacion del Api de **LinkedList** y de **mean and standard** esta a continuacion [aqui](documents/EnunciadoTallerEjercicioMVNGit.pdf).
+La documentacion del Api de **LinkedList** y de **mean and standard** esta a continuacion [aqui](documents/Laboratorio_1_Arep).
 
 ## Running
  Para empaquetar el proyecto de Java 
